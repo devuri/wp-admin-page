@@ -1,0 +1,146 @@
+#wll-important-notice {
+    padding: 4px;
+    background-color: blanchedalmond;
+    margin-left: -20px;
+    text-align: center;
+}
+
+
+.wll-container {
+    background-color: #fff;
+    box-shadow: 0 0 10px -5px rgba(0,0,0,0.5);
+    padding: 20px;
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    font-size: initial;
+    line-height: 2em;
+}
+
+#wll-textarea-css{
+    width: 100%;
+    background-color: black;
+    color: aliceblue;
+    font-family: inherit;
+    font-size: inherit;
+    border: 0px;
+    border-radius: inherit;
+    padding: 8px;
+}
+
+.wll-admin-wrap select{
+  font-size: initial;
+  font-weight: 500;
+}
+
+.wll-admin-wrap p {
+  font-size: inherit;
+  line-height: 1.5;
+  margin: 1em 0;
+}
+
+.wll-admin-wrap h2, h3 {
+    font-weight: 400;
+    font-size: 2em;
+}
+
+.wll-header {
+    background-color: #fff;
+    z-index: 10;
+    margin-left: -20px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+h2.wll-admin .nav-tab-wrapper .wp-clearfix{
+    border-bottom: 0px solid #ccc;
+    margin: 0;
+    padding-top: 9px;
+    padding-bottom: 0;
+    line-height: inherit;
+}
+
+.wll-admin-tab,
+.wll-admin-tab:focus,
+.wll-admin-tab:focus:active,
+.wll-admin-tab:hover{
+  color: #007cba;
+  border-bottom: none;
+}
+
+.wll-admin-wrap a {
+  text-decoration: none;
+}
+
+a.wll-admin-tab {
+    float: left;
+    /* border: 1px solid #ccc; */
+    border-bottom: none;
+    margin-left: .5em;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.71428571;
+    font-weight: 600;
+    /* background: #e5e5e5; */
+    color: #007cba;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.wll-admin-dashicons-before:before {
+  font-family: dashicons;
+  line-height: unset;
+  padding: 4px 8px;
+  font-weight: 400;
+  font-style: normal;
+  speak: none;
+  text-decoration: inherit;
+  text-transform: none;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: auto;
+  height: auto;
+  font-size: 40px;
+  vertical-align: middle;
+  text-align: center;
+  transition: color .1s ease-in;
+  color: #555555;
+  margin-right: 8px;
+  margin-left: 9px;
+
+  border: 0;
+border-top: 2px solid #ddd;
+border-left: 1px solid #ddd;
+border-bottom: 2px solid #fafafa;
+border-right: 1px solid #fafafa;
+border-radius: 8px;
+}
+
+.wll-admin-title{
+  font-size: 20px;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.wll-small-admin-dashicons:before {
+    font-family: dashicons;
+    display: inline-block;
+    font-weight: 400;
+    font-style: normal;
+    speak: none;
+    text-decoration: inherit;
+    text-transform: none;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    vertical-align: top;
+    text-align: center;
+    transition: color .1s ease-in;
+}
