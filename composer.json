@@ -2,7 +2,7 @@
     "name": "devuri/wp-admin-page",
     "description": "WP Admin Page is Quick and Easy way to build out Admin Menu Pages For WordPress",
     "type": "library",
-    "license": "GPL-3.0",
+    "license": "MIT",
     "homepage": "https://github.com/devuri",
     "support":{
         "issues": "https://github.com/devuri/wp-admin-page/issues",

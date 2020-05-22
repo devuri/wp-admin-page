@@ -7,7 +7,7 @@ namespace WPAdminPage;
  * @copyright 	Copyright © 2020 Uriel Wilson.
  * @package   	FormHelper
  * @version   	1.2.0
- * @license   	GPL-3.0
+ * @license   	MIT
  * @author    	Uriel Wilson
  * @link      	https://github.com/devuri/wp-admin-page/
  *

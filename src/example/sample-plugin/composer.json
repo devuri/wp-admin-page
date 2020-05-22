@@ -1,0 +1,5 @@
+{
+    "require": {
+        "devuri/wp-admin-page": "^1.0"
+    }
+}
