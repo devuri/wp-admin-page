@@ -217,6 +217,14 @@ if (!class_exists('WPAdminPage\AdminPage')) {
     }
 
     /**
+     * whats the version
+     * @return [type] [description]
+     */
+    public function admin_gui_version(){
+      return self::ADMINVERSION;
+    }
+
+    /**
      * admin  path
      * @return [type] [description]
      */
