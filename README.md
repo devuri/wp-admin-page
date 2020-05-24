@@ -87,17 +87,3 @@ Tested up to PHP: 7.4
 ```
 
 
-
-## Authors
-
-* **Devuri** - *Initial work* - [Devuri](https://github.com/devuri)
-
-
-## License
-
-This project is licensed under the **GNU General Public License v2.0** - see the [LICENSE.txt](LICENSE.txt) file for details
-
-## Acknowledgments
-
-* wp codex
-* Inspiration: plugin dev
