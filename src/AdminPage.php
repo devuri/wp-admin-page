@@ -7,7 +7,7 @@ use WPAdminPage\FormHelper as Form;
    * --------------------------------------------------------------------------
    * @copyright 	Copyright © 2020 Uriel Wilson.
    * @package   	AdminPage
-   * @version   	1.1.5
+   * @version   	1.1.6
    * @license   	GPL-2.0
    * @author    	Uriel Wilson
    * @link      	https://github.com/devuri/wp-admin-page/
@@ -22,7 +22,7 @@ if (!class_exists('WPAdminPage\AdminPage')) {
     /**
      * class version
      */
-    const ADMINVERSION = '1.1.5';
+    const ADMINVERSION = '1.1.6';
 
     /**
      * get the current plugin dir path
@@ -138,13 +138,7 @@ if (!class_exists('WPAdminPage\AdminPage')) {
     private $admin_submenu;
 
     private $mcolor = '#0071A1';
-
-    /**
-     * To hide the submenu link from a top level menu
-     * @var boolean
-     */
-    private $display_submenulink = true;
-
+    
     /**
      * Initialization
      *
@@ -175,10 +169,6 @@ if (!class_exists('WPAdminPage\AdminPage')) {
       $this->position     = $main_menu[6];
       $this->prefix       = $main_menu[7];
       $this->plugin_path  = $main_menu[8];
-      // show submenu link
-      if (isset($main_menu[9])) {
-        $this->display_submenulink  = $main_menu[9];
-      }
 
       // submenu
       $this->submenu_args = $submenu_items;
@@ -250,16 +240,6 @@ if (!class_exists('WPAdminPage\AdminPage')) {
       return $this->plugin_path . 'pages/';
     }
 
-    /**
-     * display submenu link items
-     */
-    private function display_submenu_link(){
-      if ($this->display_submenulink) {
-        return $this->menu_slug;
-      } else {
-        return null;
-      }
-    }
 
     /**
      * Styles on header action
@@ -529,8 +509,7 @@ if (!class_exists('WPAdminPage\AdminPage')) {
         }
           // build out the sub menu items
           add_submenu_page(
-            //$this->menu_slug,
-            $this->display_submenu_link(),
+            $this->menu_slug,
             ucfirst(__($submenu_item)),
             ucwords(__($submenu_item)),
             $this->capability,

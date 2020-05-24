@@ -12,7 +12,9 @@
     "authors": [
         {
             "name": "Uriel Wilson",
-            "email": "hello@urielwilson.com"
+            "email": "hello@urielwilson.com",
+            "homepage": "https://urielwilson.com",
+            "role": "Developer"
         }
     ],
     "require": {
