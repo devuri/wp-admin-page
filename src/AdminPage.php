@@ -1,19 +1,20 @@
 <?php
+/**
+ * The Main admin Class used the genereate the dmin pages
+ *
+ * @copyright 	Copyright © 2020 Uriel Wilson.
+ * @package   	AdminPage
+ * @version   	1.1.6
+ * @license   	GPL-2.0
+ * @author    	Uriel Wilson
+ * @link      	https://github.com/devuri/wp-admin-page/
+ */
 
 namespace WPAdminPage;
+
 use WPAdminPage\FormHelper as Form;
 
-  /**
-   * --------------------------------------------------------------------------
-   * @copyright 	Copyright © 2020 Uriel Wilson.
-   * @package   	AdminPage
-   * @version   	1.1.6
-   * @license   	GPL-2.0
-   * @author    	Uriel Wilson
-   * @link      	https://github.com/devuri/wp-admin-page/
-   * --------------------------------------------------------------------------
-   */
-  if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH')) exit;
 
 
 if (!class_exists('WPAdminPage\AdminPage')) {
@@ -121,24 +122,11 @@ if (!class_exists('WPAdminPage\AdminPage')) {
     private $submenu_args;
 
     /**
-     * Stand alone Submenu for settings (options-general.php)
-     *
-     * Setup a seperate admin only menu without any sub menus
-     * @link https://developer.wordpress.org/reference/functions/add_submenu_page/
-     *
-     * @var array $settings_args List of settings items
-     * @var string $parent_slugs the parent page, defaults to WordPress Settings Menu
-     * @var string $admin_only_capability who can access, defaults to Admin user Role
-     * @var string $admin_submenu The admin menu
-     * @since 1.0
+     * menu color
+     * @var [type]
      */
-    private $settings_args;
-    private $parent_slug  = 'options-general.php';
-    private $admin_only_capability  = 'manage_options';
-    private $admin_submenu;
-
     private $mcolor = '#0071A1';
-    
+
     /**
      * Initialization
      *
@@ -149,8 +137,7 @@ if (!class_exists('WPAdminPage\AdminPage')) {
      */
     public function __construct(
         array $main_menu,
-        array $submenu_items = array(),
-        array $admin_only = array()
+        array $submenu_items = array()
     ) {
       /**
        * add the color scheme
@@ -172,9 +159,6 @@ if (!class_exists('WPAdminPage\AdminPage')) {
 
       // submenu
       $this->submenu_args = $submenu_items;
-
-      // Admin Only Settings Menu
-      $this->settings_args = $admin_only;
 
       // actions
       $this->wp_actions();
@@ -230,6 +214,14 @@ if (!class_exists('WPAdminPage\AdminPage')) {
      */
     public function instance(){
       return new self($this->args(),$this->submenu_args,$this->settings_args);
+    }
+
+    /**
+     * whats the version
+     * @return [type] [description]
+     */
+    public function admin_gui_version(){
+      return self::ADMINVERSION;
     }
 
     /**
@@ -323,11 +315,7 @@ if (!class_exists('WPAdminPage\AdminPage')) {
      * @return
      */
     public function load_admin_page() {
-      if ($this->admin_submenu) {
-        $admin_file = $this->admin_path() . 'admin-options/'.$this->page_name().'.admin.php';
-      } else {
-        $admin_file = $this->admin_path() . $this->menu_slug().'/'.$this->page_name().'.admin.php';
-      }
+      $admin_file = $this->admin_path() . $this->menu_slug().'/'.$this->page_name().'.admin.php';
       return $admin_file;
     }
 
@@ -517,36 +505,6 @@ if (!class_exists('WPAdminPage\AdminPage')) {
             array( $this, 'menu_callback' )
           );
         }
-
-        /**
-         * Admin Only Settings Menu
-         *
-         * Here is where we build a custom settings section under
-         * the settings menu in WordPress Admin Backend
-         * this is only accessible to Administrators
-         * @link https://developer.wordpress.org/reference/functions/__/
-         */
-        foreach ($this->settings_arg() as $akey => $admin_item) {
-          $admin_slug = sanitize_title($admin_item);
-          add_submenu_page(
-            $this->parent_slug,
-            ucfirst(__($admin_item)),
-            ucwords(__($admin_item)),
-            $this->admin_only_capability,
-            $admin_slug,
-            array( $this, 'adminonly_callback' )
-          );
-        }
-    }
-
-    /**
-     * Admin Only Settings Menu
-     *
-     * @since 1.0
-     * @return
-     */
-    public function settings_arg(){
-        return $this->settings_args;
     }
 
   }//class
