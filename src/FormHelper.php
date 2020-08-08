@@ -23,7 +23,7 @@ if (!class_exists('WPAdminPage\Admin\Form\FormHelper')) {
     /**
      * class version
      */
-    const ADMINVERSION = '1.2.0';
+    const ADMINVERSION = '1.3.1';
 
     /**
      * processing
