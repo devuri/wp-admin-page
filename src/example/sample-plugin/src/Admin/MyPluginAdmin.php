@@ -30,7 +30,11 @@ final class MyPluginAdmin extends AdminPage {
 	 */
 	private static function submenu(){
 		$submenu = array();
-		$submenu[] = 'Menu One';
+		$submenu[] = 'Menu One'; // ( 1st item ) will always set access to 'manage_options'
+		$submenu[] = array(
+      'name'   => 'Example',
+      'access' => 'manage_options'
+    );
 		$submenu[] = 'Menu Two';
 		$submenu[] = 'etc';
 		return $submenu;

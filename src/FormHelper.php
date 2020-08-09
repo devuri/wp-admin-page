@@ -6,7 +6,7 @@ namespace WPAdminPage;
  * ----------------------------------------------------------------------------
  * @copyright 	Copyright © 2020 Uriel Wilson.
  * @package   	FormHelper
- * @version   	1.2.0
+ * @version   	1.3.2
  * @license   	GPL-2.0
  * @author    	Uriel Wilson
  * @link      	https://github.com/devuri/wp-admin-page/
@@ -23,7 +23,7 @@ if (!class_exists('WPAdminPage\Admin\Form\FormHelper')) {
     /**
      * class version
      */
-    const ADMINVERSION = '1.2.0';
+    const ADMINVERSION = '1.3.2';
 
     /**
      * processing
@@ -95,7 +95,7 @@ if (!class_exists('WPAdminPage\Admin\Form\FormHelper')) {
 
       // lets build out the input
       $input  = '<!-- input field '.$fieldname.'_input -->';
-      $input .= '<tr class="input">';
+      $input .= '<tr class="input-'.str_replace(" ", "-", $fieldname).'">';
       $input .= '<th>';
       $input .= '<label for="'.str_replace(" ", "_", $fieldname).'">';
       $input .= ucwords(str_replace("_", " ", $fieldname));
@@ -265,7 +265,6 @@ if (!class_exists('WPAdminPage\Admin\Form\FormHelper')) {
      * @link https://developer.wordpress.org/reference/functions/wp_dropdown_categories/
      */
     public function categorylist($fieldname=null,$args = array()){
-      $require = $this->is_required($required);
 
       $catlist_args = array(
         'show_option_all'    => '',

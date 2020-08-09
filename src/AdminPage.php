@@ -4,7 +4,7 @@
  *
  * @copyright 	Copyright © 2020 Uriel Wilson.
  * @package   	AdminPage
- * @version   	1.1.6
+ * @version   	2.0.0
  * @license   	GPL-2.0
  * @author    	Uriel Wilson
  * @link      	https://github.com/devuri/wp-admin-page/
@@ -23,7 +23,7 @@ if (!class_exists('WPAdminPage\AdminPage')) {
     /**
      * class version
      */
-    const ADMINVERSION = '1.1.6';
+    const ADMINVERSION = '2.0.0';
 
     /**
      * get the current plugin dir path
@@ -293,7 +293,7 @@ if (!class_exists('WPAdminPage\AdminPage')) {
      * Load the admin page header
      * @return [type] [description]
      */
-    public function header(){
+    public function header( $access = 'manage_options' ){
       $header = plugin_dir_path( __FILE__ ).'pages/header.admin.php';
       $this->require_page($header);
     }
@@ -390,19 +390,30 @@ if (!class_exists('WPAdminPage\AdminPage')) {
 
       echo '<h2 style="border: unset; " class="wll-admin nav-tab-wrapper wp-clearfix">';
       foreach ($this->submenu_args as $key => $submenu_item) {
-         #slugs
+
+        # first item is always admin only
         if ($key == 0) {
-            $submenu_slug = $this->menu_slug;
+          $submenu_access = 'manage_options';
         } else {
-            $submenu_slug = sanitize_title($this->prefix.'-'.$submenu_item);
+          $submenu_access = $this->submenu_val($submenu_item,'access');
         }
 
-        // build out the sub menu items
-        if ($submenu_slug == $this->page_title()) {
-          echo '<a href="'.admin_url('/admin.php?page='.strtolower($submenu_slug).'').'" style="color:'.$this->mcolor.'" class="wll-admin-tab nav-tab-active">'.ucwords(__($submenu_item)).'</a>';
-        } else {
-          echo '<a href="'.admin_url('/admin.php?page='.strtolower($submenu_slug).'').'" style="color:'.$this->mcolor.'" class="wll-admin-tab">'.ucwords(__($submenu_item)).'</a>';
-        }
+          # check if user has access for the menu
+          if (current_user_can($submenu_access)) {
+            #slugs
+            if ($key == 0) {
+              $submenu_slug = $this->menu_slug;
+            } else {
+              $submenu_slug = sanitize_title($this->prefix.'-'.$this->submenu_val($submenu_item,'name'));
+            }
+
+            # build out the sub menu items
+            if ($submenu_slug == $this->page_title()) {
+              echo '<a href="'.admin_url('/admin.php?page='.strtolower($submenu_slug).'').'" style="color:'.$this->mcolor.'" class="wll-admin-tab nav-tab-active">'.ucwords(__($this->submenu_val($submenu_item,'name'))).'</a>';
+            } else {
+              echo '<a href="'.admin_url('/admin.php?page='.strtolower($submenu_slug).'').'" style="color:'.$this->mcolor.'" class="wll-admin-tab">'.ucwords(__($this->submenu_val($submenu_item,'name'))).'</a>';
+            }
+          }
       }
       echo '</h2>';
     }
@@ -487,24 +498,52 @@ if (!class_exists('WPAdminPage\AdminPage')) {
        * @link https://developer.wordpress.org/reference/functions/__/
        */
       foreach ($this->submenu_args as $key => $submenu_item) {
+
+        # access
+        if ($key == 0) {
+          $submenu_access = 'manage_options';
+        } else {
+          $submenu_access = $this->submenu_val($submenu_item,'access');
+        }
+
         #slugs
         if ($key == 0) {
           // change the slug for first item to match parent slug
           $submenu_slug = $this->menu_slug;
         } else {
           // keep current slug
-          $submenu_slug = sanitize_title($this->prefix.'-'.$submenu_item);
+          $submenu_slug = sanitize_title($this->prefix.'-'.$this->submenu_val($submenu_item,'name'));
         }
-          // build out the sub menu items
+
+          # build out the sub menu items
           add_submenu_page(
             $this->menu_slug,
-            ucfirst(__($submenu_item)),
-            ucwords(__($submenu_item)),
-            $this->capability,
+            ucfirst(__($this->submenu_val($submenu_item,'name'))),
+            ucwords(__($this->submenu_val($submenu_item,'name'))),
+            $submenu_access,
             $submenu_slug,
             array( $this, 'menu_callback' )
           );
         }
+
+    }
+
+    /**
+     * Return the correct submenu value
+     * @param  mixed  $val  value
+     * @param  string $item value
+     * @return string
+     */
+    public function submenu_val( $val , $item = 'name'){
+      if (is_array($val)) {
+        return $val[$item];
+      } else {
+        $subm = array(
+          'name'   => $val,
+          'access' => $this->capability,
+        );
+        return $subm[$item];
+      }
     }
 
   }//class
