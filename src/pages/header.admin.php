@@ -4,9 +4,6 @@
     wp_die();
   }
 
-  if (!current_user_can($this->capability)) {
-    wp_die();
-  }
 	// thickbox support
 	add_thickbox();
 
