@@ -4,7 +4,7 @@
  *
  * @copyright 	Copyright © 2020 Uriel Wilson.
  * @package   	AdminPage
- * @version   	2.0.0
+ * @version   	2.1.0
  * @license   	GPL-2.0
  * @author    	Uriel Wilson
  * @link      	https://github.com/devuri/wp-admin-page/
@@ -23,7 +23,7 @@ if (!class_exists('WPAdminPage\AdminPage')) {
     /**
      * class version
      */
-    const ADMINVERSION = '2.0.0';
+    const ADMINVERSION = '2.1.0';
 
     /**
      * get the current plugin dir path
@@ -139,23 +139,46 @@ if (!class_exists('WPAdminPage\AdminPage')) {
         array $main_menu,
         array $submenu_items = array()
     ) {
+
       /**
-       * add the color scheme
-       * use defualt if not defined
+       * user defined
+       * @var array
+       */
+      $args = $main_menu;
+
+      /**
+       * default params
+       * @link https://developer.wordpress.org/reference/functions/wp_parse_args/
+       */
+      $default = array();
+      $default['id'] 	        = 'no-ID-provided';
+      $default['pro'] 	      = false;
+      $default['mcolor'] 	    = $this->mcolor;
+      $default['page_title'] 	= $args[0];
+      $default['menu_title'] 	= $args[1];
+      $default['capability'] 	= $args[2];
+      $default['menu_slug'] 	= $args[3];
+      $default['function'] 	  = array( $this, 'menu_callback' );
+      $default['icon_url'] 	  = $args[5];
+      $default['position'] 	  = null;
+      $default['prefix']      = $args[7];
+      $default['plugin_path'] = $args[8];
+      $args = wp_parse_args( $args , $default );
+
+      /**
+       * define menu vars
        * @var [type]
        */
-       if ( count($main_menu) > 9 ) {
-        $this->mcolor = array_shift($main_menu);
-       }
-      $this->page_title   = $main_menu[0];
-      $this->menu_title   = $main_menu[1];
-      $this->capability   = $main_menu[2];
-      $this->menu_slug    = $main_menu[3];
+      $this->mcolor       = $args['mcolor'];
+      $this->page_title   = $args['page_title'];
+      $this->menu_title   = $args['menu_title'];
+      $this->capability   = $args['capability'];
+      $this->menu_slug    = $args['menu_slug'];
       $this->function     = array( $this, 'menu_callback' );
-      $this->icon_url     = $main_menu[5];
-      $this->position     = $main_menu[6];
-      $this->prefix       = $main_menu[7];
-      $this->plugin_path  = $main_menu[8];
+      $this->icon_url     = $args['icon_url'];
+      $this->position     = $args['position'];
+      $this->prefix       = $args['prefix'];
+      $this->plugin_path  = $args['plugin_path'];
 
       // submenu
       $this->submenu_args = $submenu_items;
@@ -395,7 +418,7 @@ if (!class_exists('WPAdminPage\AdminPage')) {
         if ($key == 0) {
           $submenu_access = 'manage_options';
         } else {
-          $submenu_access = $this->submenu_val($submenu_item,'access');
+          $submenu_access = $this->submenu_val($submenu_item,'capability');
         }
 
           # check if user has access for the menu
@@ -503,7 +526,7 @@ if (!class_exists('WPAdminPage\AdminPage')) {
         if ($key == 0) {
           $submenu_access = 'manage_options';
         } else {
-          $submenu_access = $this->submenu_val($submenu_item,'access');
+          $submenu_access = $this->submenu_val($submenu_item,'capability');
         }
 
         #slugs
@@ -539,8 +562,8 @@ if (!class_exists('WPAdminPage\AdminPage')) {
         return $val[$item];
       } else {
         $subm = array(
-          'name'   => $val,
-          'access' => $this->capability,
+          'name'        => $val,
+          'capability'  => $this->capability,
         );
         return $subm[$item];
       }
