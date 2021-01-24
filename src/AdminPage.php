@@ -4,7 +4,7 @@
  *
  * @copyright 	Copyright © 2020 Uriel Wilson.
  * @package   	AdminPage
- * @version   	3.1.0
+ * @version   	3.1.3
  * @license   	GPL-2.0
  * @author    	Uriel Wilson
  * @link      	https://github.com/devuri/wp-admin-page/
@@ -22,7 +22,7 @@ abstract class AdminPage {
 	/**
 	 * Class version
 	 */
-	const ADMINVERSION = '3.1.0';
+	const ADMINVERSION = '3.1.3';
 
 	/**
 	 * Get the current plugin dir path
