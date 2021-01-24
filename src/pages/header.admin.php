@@ -1,5 +1,7 @@
 <?php
 
+if ( ! defined('ABSPATH') ) exit;
+
   if (!is_user_logged_in()) {
     wp_die();
   }
@@ -16,7 +18,9 @@
   echo $this->menu_title();
   $this->tab_menu();
 ?></header>
-	<div class="wrap"><h2></h2></div><!---admin notices -->
+	<div class="wrap"><h2></h2>
+  <?php do_action( 'wpa_admin_notice') ?>
+  </div><!---admin notices -->
 	<div class="wll-container">
 	  <div class="wll-child">
 	    	<div class="wll-grid-item">
