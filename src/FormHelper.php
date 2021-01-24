@@ -16,7 +16,7 @@ namespace WPAdminPage;
 
 if (!defined('ABSPATH')) exit;
 
-if (!class_exists('WPAdminPage\Admin\Form\FormHelper')) {
+
   final class FormHelper {
 
 
@@ -27,7 +27,7 @@ if (!class_exists('WPAdminPage\Admin\Form\FormHelper')) {
 
     /**
      * processing
-     * @var boolean
+     * @var bool
      */
     public $processing = false;
 
@@ -54,7 +54,9 @@ if (!class_exists('WPAdminPage\Admin\Form\FormHelper')) {
 
     /**
      * [thickbox_link description]
-     * @return [type] [description]
+     * @param string $linktext
+     * @param string $id
+     * @return string [type] [description]
      */
     public function thickboxlink($linktext='click here',$id=''){
       $link = '<a href="#TB_inline?width=auto&inlineId='.$id.'" class="thickbox">';
@@ -68,8 +70,8 @@ if (!class_exists('WPAdminPage\Admin\Form\FormHelper')) {
      *
      * set field as required, defaults to false
      *
-     * @param  boolean $required
-     * @return
+     * @param bool $required
+     * @return string
      */
     public function is_required($required = false){
       if ($required) {
@@ -83,10 +85,11 @@ if (!class_exists('WPAdminPage\Admin\Form\FormHelper')) {
     /**
      * Input Field
      *
-     * @param  string  $fieldname     the name of the field
-     * @param  boolean $required set if this field is a required field
-     * @param  string  $type     the field type
-     * @return
+     * @param string $fieldname the name of the field
+     * @param string $val
+     * @param bool $required set if this field is a required field
+     * @param string $type the field type
+     * @return string
      */
     public function input($fieldname='name',$val = '...', $required = false,$type='text'){
       $fieldname = strtolower($fieldname);
@@ -117,8 +120,9 @@ if (!class_exists('WPAdminPage\Admin\Form\FormHelper')) {
     /**
      * hidden Input Field
      *
-     * @param  string  $fieldname     the name of the field
-     * @return
+     * @param string $fieldname the name of the field
+     * @param string $val
+     * @return string
      */
     public function input_hidden($fieldname='name',$val = '...'){
     	$fieldname = strtolower($fieldname);
@@ -181,11 +185,36 @@ if (!class_exists('WPAdminPage\Admin\Form\FormHelper')) {
     }
 
     /**
-     * select field
-     * @param  array  $options [description]
-     * @return [type]          [description]
+     * Set the Selected value
+     *
+     * @param  array $options  the options list
+     * @return string
      */
+    private function selected( $options = null ){
+      if ( array_key_exists('selected', $options) ) {
+        $selected = $options['selected'];
+      } else {
+        $selected = '';
+      }
+      return $selected;
+    }
+
+      /**
+       * select field
+       * @param array $options [description]
+       * @param string $fieldname
+       * @param string $js
+       * @param bool $required
+       * @return string [type]          [description]
+       */
     public function select($options = array(),$fieldname = 'name', $js='do_some_js_action', $required = false){
+      // set selected option
+      $selected = $this->selected( $options );
+
+      if ( array_key_exists('selected', $options) ) {
+        unset($options['selected']);
+      }
+
       // set reuired
       $require = $this->is_required($required);
       $js_function = $js;
@@ -212,6 +241,7 @@ if (!class_exists('WPAdminPage\Admin\Form\FormHelper')) {
         }
       }
       $select .= '</select>';
+      $select .= ' <strong>'. ucwords(str_replace("_", " ", $selected)) .'</strong>';
       $select .= '<p class="description" id="'.str_replace(" ", "-", $fieldname).'-description">';
       $select .= strtolower(str_replace("_", " ", $fieldname));
       $select .= '<strong>.</strong>';
@@ -222,13 +252,13 @@ if (!class_exists('WPAdminPage\Admin\Form\FormHelper')) {
       return $select;
     }
 
-    /**
-     * Textarea
-     *
-     * @param  string  $fieldname     field name
-     * @param  boolean $required set the filed to required
-     * @return
-     */
+  /**
+   * Textarea
+   *
+   * @param string $fieldname field name
+   * @param bool $required set the filed to required
+   * @return string
+   */
     public function textarea($fieldname='name',$required = false){
       $fieldname = strtolower($fieldname);
       // set reuired
@@ -259,9 +289,9 @@ if (!class_exists('WPAdminPage\Admin\Form\FormHelper')) {
     /**
      * Custom version of the WP Dropdown Category list
      *
-     * @param  string $fieldname   field name
-     * @param  array $args define custom arguments
-     * @return
+     * @param string $fieldname field name
+     * @param array $args define custom arguments
+     * @return string
      * @link https://developer.wordpress.org/reference/functions/wp_dropdown_categories/
      */
     public function categorylist($fieldname=null,$args = array()){
@@ -302,9 +332,9 @@ if (!class_exists('WPAdminPage\Admin\Form\FormHelper')) {
      * Make Table
      *
      * Use this to create a table for the form
-     * @param  string $tag decide to open or close table
-     * @param  string $tbclass ad css class
-     * @return
+     * @param string $tag decide to open or close table
+     * @param string $tbclass ad css class
+     * @return string
      */
     public function table($tag='close', $tbclass=''){
       if ($tag === 'open') {
@@ -321,12 +351,11 @@ if (!class_exists('WPAdminPage\Admin\Form\FormHelper')) {
 
     /**
      * [submit_button description]
-     * @param  string  $text             The text of the button. Default 'Save Changes'.
-     * @param  string  $type             The type and CSS class(es) of the button. Core values include 'primary', 'small', and 'large'.
-     * @param  string  $name             name of the submit button
-     * @param  boolean $wrap             True if the output button should be wrapped in a paragraph tag, false otherwise.
-     * @param  string  $other_attributes [description]
-     * @return [type]                    [description]
+     * @param string $text The text of the button. Default 'Save Changes'.
+     * @param string $type The type and CSS class(es) of the button. Core values include 'primary', 'small', and 'large'.
+     * @param string $name name of the submit button
+     * @param string $wrap True if the output button should be wrapped in a paragraph tag, false otherwise.
+     * @return  [type]                    [description]
      * @link https://developer.wordpress.org/reference/functions/get_submit_button/
      */
     public function submit_button($text = 'Save Changes', $type = 'primary large',$name ='submit',$wrap = ''){
@@ -351,7 +380,7 @@ if (!class_exists('WPAdminPage\Admin\Form\FormHelper')) {
     /**
      * nonce field
      *
-     * @param  string $fieldname nonce field name
+     * @param string $wpnonce
      * @return
      * @link https://developer.wordpress.org/reference/functions/wp_nonce_field/
      */
@@ -362,22 +391,20 @@ if (!class_exists('WPAdminPage\Admin\Form\FormHelper')) {
     /**
      * nonce_check
      *
-     * @param  string $noncefield [description]
-     * @return
+     * @param string $noncefield [description]
+     * @return bool
      * @link https://developer.wordpress.org/reference/functions/wp_verify_nonce/
      */
     public function verify_nonce($noncefield='_swa_page_wpnonce'){
       /**
        * Lets verify this
        *
-       * @return boolean
+       * @return bool
        */
       if ( ! isset( $_POST[$noncefield] ) || ! wp_verify_nonce( $_POST[$noncefield] )) {
         return false;
       } else {
-        return true; // nonce is invalid
+        return true; // nonce is valid
       }
     }
-
-  }
 }
