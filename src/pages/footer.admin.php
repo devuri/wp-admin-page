@@ -7,6 +7,6 @@
 	<?php
 	echo ucwords( str_replace( '-', ' ',$this->page_name()));
 	echo '<hr/>';
-	echo '<small>Admin GUI | Version '.$this->admin_gui_version().'</small>';
+	echo get_bloginfo('name').' <small> Admin GUI | Version '.$this->admin_gui_version().'</small>';
 	?>
 </div>
