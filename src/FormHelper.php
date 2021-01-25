@@ -6,7 +6,7 @@ namespace WPAdminPage;
  * ----------------------------------------------------------------------------
  * @copyright 	Copyright © 2020 Uriel Wilson.
  * @package   	FormHelper
- * @version   	1.4.0
+ * @version   	1.4.1
  * @license   	GPL-2.0
  * @author    	Uriel Wilson
  * @link      	https://github.com/devuri/wp-admin-page/
@@ -291,7 +291,7 @@ if (!defined('ABSPATH')) exit;
    * @param bool $required set the filed to required
    * @return string
    */
-    public function textarea($fieldname='name',$required = false){
+    public function textarea($fieldname='name', $val = '...', $required = false){
       $fieldname = strtolower($fieldname);
       // set reuired
       $require = $this->is_required($required);
@@ -307,6 +307,7 @@ if (!defined('ABSPATH')) exit;
       $textarea .= '</th>';
       $textarea .= '<td>';
       $textarea .= '<textarea class="uk-textarea" name="'.str_replace(" ", "_", $fieldname).'_textarea" rows="8" cols="50">';
+      $textarea .= $val;
       $textarea .= '</textarea>';
       $textarea .= '<p class="description" id="'.str_replace(" ", "-", $fieldname).'-description">';
       $textarea .= strtolower(str_replace("_", " ", $fieldname));
