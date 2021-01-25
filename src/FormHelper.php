@@ -6,7 +6,7 @@ namespace WPAdminPage;
  * ----------------------------------------------------------------------------
  * @copyright 	Copyright © 2020 Uriel Wilson.
  * @package   	FormHelper
- * @version   	1.3.2
+ * @version   	1.4.0
  * @license   	GPL-2.0
  * @author    	Uriel Wilson
  * @link      	https://github.com/devuri/wp-admin-page/
@@ -30,6 +30,38 @@ if (!defined('ABSPATH')) exit;
      * @var bool
      */
     public $processing = false;
+
+	/**
+	 * set_name
+	 *
+	 * @param string $fieldname .
+	 */
+	public function set_name( $fieldname ) {
+		$fieldname = sanitize_text_field( $fieldname );
+		$fieldname = sanitize_title( $fieldname );
+		$fieldname = str_replace("-", "_", $fieldname);
+		return $fieldname;
+	}
+
+	/**
+	 * Capitalize
+	 *
+	 * @param string $fieldname .
+	 */
+	public function capitalize( $fieldname ) {
+		$fieldname = str_replace("_", " ", $this->set_name( $fieldname ));
+		return ucwords($fieldname);
+	}
+
+	/**
+	 * Capitalize
+	 *
+	 * @param string $fieldname .
+	 */
+	public function lowercase( $fieldname ) {
+		return str_replace("_", " ",$this->set_name( $fieldname ));
+	}
+
 
     /**
      * user_feedback
@@ -92,28 +124,28 @@ if (!defined('ABSPATH')) exit;
      * @return string
      */
     public function input($fieldname='name',$val = '...', $required = false,$type='text'){
-      $fieldname = strtolower($fieldname);
-      // set reuired
+
+	  // set reuired
       $require = $this->is_required($required);
 
       // lets build out the input
       $input  = '<!-- input field '.$fieldname.'_input -->';
-      $input .= '<tr class="input-'.str_replace(" ", "-", $fieldname).'">';
+      $input .= '<tr class="input-'.sanitize_title($fieldname).'">';
       $input .= '<th>';
-      $input .= '<label for="'.str_replace(" ", "_", $fieldname).'">';
-      $input .= ucwords(str_replace("_", " ", $fieldname));
+      $input .= '<label for="'.$fieldname.'">';
+      $input .= $this->capitalize( $fieldname );
       $input .= $require;
       $input .= '</label>';
       $input .= '</th>';
       $input .= '<td>';
-      $input .= '<input type="'.$type.'" name="'.str_replace(" ", "_", $fieldname).'" id="'.str_replace(" ", "_", $fieldname).'" aria-describedby="'.str_replace(" ", "-", $fieldname).'-description" value="'.$val.'" class="uk-input">';
-      $input .= '<p class="description" id="'.str_replace(" ", "-", $fieldname).'-description">';
-      $input .= strtolower(str_replace("_", " ", $fieldname));
+      $input .= '<input type="'.$type.'" name="'.$this->set_name($fieldname).'" id="'.$this->set_name($fieldname).'" aria-describedby="'.sanitize_title($fieldname).'-description" value="'.$val.'" class="wpa-input">';
+      $input .= '<p class="description" id="'.sanitize_title($fieldname).'-description">';
+      $input .= $this->lowercase($fieldname);
       $input .= '<strong>.</strong>';
       $input .= '</p>';
       $input .= '</td>';
       $input .= '</tr>';
-      $input .= '<!-- input field '.$fieldname.'_input -->';
+      $input .= '<!-- input field '.$this->set_name($fieldname).'_input -->';
       return $input;
     }
 
