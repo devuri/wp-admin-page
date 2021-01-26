@@ -22,7 +22,7 @@ abstract class AdminPage {
 	/**
 	 * Class version
 	 */
-	const ADMINVERSION = '3.1.4';
+	const ADMINVERSION = '3.3.0';
 
 	/**
 	 * Get the current plugin dir path

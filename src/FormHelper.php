@@ -6,7 +6,7 @@ namespace WPAdminPage;
  * ----------------------------------------------------------------------------
  * @copyright 	Copyright © 2020 Uriel Wilson.
  * @package   	FormHelper
- * @version   	1.4.1
+ * @version   	1.4.3
  * @license   	GPL-2.0
  * @author    	Uriel Wilson
  * @link      	https://github.com/devuri/wp-admin-page/
@@ -23,7 +23,7 @@ if (!defined('ABSPATH')) exit;
     /**
      * class version
      */
-    const ADMINVERSION = '1.3.2';
+    const ADMINVERSION = '3.3.0';
 
     /**
      * processing
@@ -219,6 +219,10 @@ if (!defined('ABSPATH')) exit;
     /**
      * Set the Selected value
      *
+     * uses the selected array value.
+     * note that $selected should an array.
+     * passed in as $selected = array( $key => $val );
+     *
      * @param  array $options  the options list
      * @return string
      */
@@ -226,7 +230,7 @@ if (!defined('ABSPATH')) exit;
       if ( array_key_exists('selected', $options) ) {
         $selected = $options['selected'];
       } else {
-        $selected = '';
+        $selected = array();
       }
       return $selected;
     }
@@ -240,17 +244,18 @@ if (!defined('ABSPATH')) exit;
        * @return string [type]          [description]
        */
     public function select($options = array(),$fieldname = 'name', $js='do_some_js_action', $required = false){
-      // set selected option
-      $selected = $this->selected( $options );
 
-      if ( array_key_exists('selected', $options) ) {
+		// set selected option
+		foreach ( $this->selected( $options ) as $key => $selectedval ) {
+		   $defualt_select = '<option selected="selected" value="'.$key.'">'.ucfirst( $selectedval ).'</option>';
+		}
+
+	  if ( array_key_exists('selected', $options) ) {
         unset($options['selected']);
       }
-
       // set reuired
       $require = $this->is_required($required);
       $js_function = $js;
-      $defualt_select = '<option selected="selected">Select an option</option>';
 
       // lets build out the select field
       $select  = '';
@@ -263,7 +268,8 @@ if (!defined('ABSPATH')) exit;
       $select .= '</th>';
       $select .= '<td>';
       $select .= '<select onchange="'.$js_function.'()" name="'.strtolower(str_replace(" ", "_", $fieldname)).'" id="'.strtolower(str_replace(" ", "_", $fieldname)).'" class="uk-select">';
-      /**
+
+	  /**
        * Options list Output
        * @var array $options
        */
@@ -271,6 +277,7 @@ if (!defined('ABSPATH')) exit;
         foreach ($options as $optkey => $optvalue) {
           $select .= '<option value="'.$optkey.'">'.ucfirst($optvalue).'</option>';
         }
+		$select .= $defualt_select;
       }
       $select .= '</select>';
       $select .= ' <strong>'. ucwords(str_replace("_", " ", $selected)) .'</strong>';
