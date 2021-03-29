@@ -273,7 +273,6 @@ final class FormHelper {
 		$select .= $defualt_select;
       }
       $select .= '</select>';
-      $select .= ' <strong>'. ucwords(str_replace("_", " ", $selected)) .'</strong>';
       $select .= '<p class="description" id="'.str_replace(" ", "-", $fieldname).'-description">';
       $select .= strtolower(str_replace("_", " ", $fieldname));
       $select .= '<strong>.</strong>';
