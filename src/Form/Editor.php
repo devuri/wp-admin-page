@@ -26,12 +26,14 @@ class Editor {
 	 */
 	private static $instance;
 
-	/**
-	 * Singleton
-	 *
-	 * @return Editor
-	 */
-	public static function init( $id, $content ): self {
+    /**
+     * Singleton
+     *
+     * @param $id
+     * @param $content
+     * @return Editor
+     */
+	public static function init( $id, $content ){
 		if ( ! isset( self::$instance ) ) {
 			self::$instance = new self( $id, $content);
 		}
@@ -63,16 +65,13 @@ class Editor {
 		];
 	}
 
-	/**
-  	 * The wp editor
-  	 *
-  	 * @param  string $this->content .
-  	 * @param  string $this->id .
-  	 * @param  array  $this->options .
-  	 * @return false|string
-  	 * @link https://developer.wordpress.org/reference/functions/wp_editor/
-  	 * @link https://developer.wordpress.org/reference/classes/_wp_editors/parse_settings/
-  	 */
+    /**
+     * The wp editor
+     *
+     * @return false|string
+     * @link https://developer.wordpress.org/reference/functions/wp_editor/
+     * @link https://developer.wordpress.org/reference/classes/_wp_editors/parse_settings/
+     */
 	public function editor() {
 	    ob_start();
 		    $args = array(
@@ -88,14 +87,11 @@ class Editor {
 	    return ob_get_clean();
 	}
 
-	/**
-	 * Get the editor
-	 *
-	 * @param  string $this->content .
-	 * @param  string $this->id .
-	 * @param  array  $this->options .
-	 * @return string
-	 */
+    /**
+     * Get the editor
+     *
+     * @return string
+     */
 	public function get() {
 
 		$name = str_replace( ' ', '_', $this->id );
