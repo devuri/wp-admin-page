@@ -2,23 +2,9 @@
 
 namespace WPAdminPage;
 
-/**
- * ----------------------------------------------------------------------------
- * @copyright 	Copyright © 2020 Uriel Wilson.
- * @package   	FormHelper
- * @version   	1.4.3
- * @license   	GPL-2.0
- * @author    	Uriel Wilson
- * @link      	https://github.com/devuri/wp-admin-page/
- *
- * ----------------------------------------------------------------------------
- */
+use WPAdminPage\Form\Editor;
 
-if (!defined('ABSPATH')) exit;
-
-
-  final class FormHelper {
-
+final class FormHelper {
 
     /**
      * class version
@@ -112,6 +98,13 @@ if (!defined('ABSPATH')) exit;
         $require = '';
       }
       return $require;
+    }
+
+	/**
+ 	* The wp editor.
+ 	*/
+    public function editor( $id, $content ){
+		return Editor::init( $id, $content )->get();
     }
 
     /**
